@@ -30,9 +30,9 @@ public class Ventana extends JFrame implements ActionListener {
 	private JComboBox comboBoxTipo;
 
 	public Ventana() {
-		setTitle("CI");
+		setTitle("Libreria");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 300, 230);
+		setBounds(100, 100, 600, 230);
 		mantel = new JPanel();
 		mantel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(mantel);
@@ -43,6 +43,7 @@ public class Ventana extends JFrame implements ActionListener {
 		crearComboBox();
 
 		Libro datosInicio = Persistencia.Persistencia.cargarDatos();
+		comboBoxTipo.setSelectedItem(datosInicio.getTipo());
 		textFieldTitulo.setText(datosInicio.getTitulo());
 		textFieldAutor.setText(datosInicio.getAutor());
 		textFieldFecha.setText(String.valueOf(datosInicio.getFecha()));
@@ -51,6 +52,12 @@ public class Ventana extends JFrame implements ActionListener {
 	}
 
 	private void crearLabels() {
+
+		JLabel lblTipo = new JLabel("Tipo");
+		lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTipo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTipo.setBounds(54, 21, 70, 12);
+		mantel.add(lblTipo);
 
 		JLabel lblTitulo = new JLabel("Titulo");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -107,6 +114,11 @@ public class Ventana extends JFrame implements ActionListener {
 
 	private void crearComboBox() {
 
+		comboBoxTipo = new JComboBox();
+		comboBoxTipo.setModel(new DefaultComboBoxModel(new String[] { "Libro", "Revista", "Comic" }));
+		comboBoxTipo.setBounds(134, 18, 96, 20);
+		mantel.add(comboBoxTipo);
+
 		comboBoxValoracion = new JComboBox();
 		comboBoxValoracion.setModel(new DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
 		comboBoxValoracion.setBounds(144, 125, 46, 20);
@@ -117,18 +129,26 @@ public class Ventana extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnGuardar) {
 			System.out.println("Botón Guardar clikeado");
+
+			String tipo = (String) comboBoxTipo.getSelectedItem();
 			String titulo = textFieldTitulo.getText();
 			String autor = textFieldAutor.getText();
-			int fecha = Integer.parseInt(textFieldFecha.getText());
+			String fechaTexto = textFieldFecha.getText();
 			String valoracion = (String) comboBoxValoracion.getSelectedItem();
-			if (titulo.isEmpty() || autor.isEmpty() || textFieldFecha.getText().isEmpty()) {
+
+			if (tipo == null || titulo.trim().isEmpty() || autor.trim().isEmpty() || fechaTexto.trim().isEmpty()
+					|| valoracion == null) {
 				System.out.println("Por favor, complete todos los campos.");
 			} else {
-				Libro x = new Libro(titulo, autor, fecha, valoracion);
-				Persistencia.Persistencia.guardarDatos(x);
+				try {
+					int fecha = Integer.parseInt(fechaTexto.trim());
+					Libro x = new Libro(tipo, titulo, autor, fecha, valoracion);
+					Persistencia.Persistencia.guardarDatos(x);
+					System.out.println("Datos guardados correctamente.");
+				} catch (NumberFormatException ex) {
+					System.out.println("El año debe ser un número entero válido.");
+				}
 			}
-
 		}
-
 	}
 }

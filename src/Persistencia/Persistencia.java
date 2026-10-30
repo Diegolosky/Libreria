@@ -36,7 +36,7 @@ public class Persistencia {
 			return nuevo;
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
-			return new Libro("", "", 0, "");
+			return new Libro("","", "", 0, "");
 		}
 
 	}
