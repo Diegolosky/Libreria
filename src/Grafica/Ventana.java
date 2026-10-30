@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Logica.Libro;
+import javax.swing.JTable;
 
 public class Ventana extends JFrame implements ActionListener {
 
@@ -32,7 +33,7 @@ public class Ventana extends JFrame implements ActionListener {
 	public Ventana() {
 		setTitle("Libreria");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 300);
+		setBounds(100, 100, 1200, 600);
 		mantel = new JPanel();
 		mantel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(mantel);
