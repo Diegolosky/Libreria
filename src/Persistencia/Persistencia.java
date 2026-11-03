@@ -1,44 +1,51 @@
 package Persistencia;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import Logica.Libro;
-
 
 public class Persistencia {
 
-	public static void guardarDatos(Libro x) {
-
+	public static void guardarDatos(ArrayList<Libro> lista) {
 		String ruta = System.getProperty("user.dir") + "\\archivo.bin";
 		try {
 			FileOutputStream flujoSalidaArchivo = new FileOutputStream(ruta);
 			ObjectOutputStream flujoSalidaObjeto = new ObjectOutputStream(flujoSalidaArchivo);
-			flujoSalidaObjeto.writeObject(x);
-			flujoSalidaArchivo.close();
+
+			flujoSalidaObjeto.writeObject(lista);
+
 			flujoSalidaObjeto.close();
-		} catch (IOException | SecurityException e) {
-			e.printStackTrace();
+			flujoSalidaArchivo.close();
+		} catch (Exception e) {
+			System.out.println("Error al guardar los datos: " + e.getMessage());
 		}
 	}
 
-	public static Libro cargarDatos() {
-
+	public static ArrayList<Libro> cargarDatos() {
 		String ruta = System.getProperty("user.dir") + "\\archivo.bin";
+		File archivo = new File(ruta);
+
+		if (!archivo.exists()) {
+			return new ArrayList<Libro>();
+		}
+
 		try {
 			FileInputStream flujoEntradaArchivo = new FileInputStream(ruta);
 			ObjectInputStream flujoEntradaObjeto = new ObjectInputStream(flujoEntradaArchivo);
-			Libro nuevo = (Libro) flujoEntradaObjeto.readObject();
-			flujoEntradaArchivo.close();
+
+			ArrayList<Libro> listaCargada = (ArrayList<Libro>) flujoEntradaObjeto.readObject();
+
 			flujoEntradaObjeto.close();
-			return nuevo;
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-			return new Libro("","", "", 0, "");
+			flujoEntradaArchivo.close();
+
+			return listaCargada;
+		} catch (Exception e) {
+			System.out.println("Error al cargar los datos: " + e.getMessage());
+			return new ArrayList<Libro>();
 		}
-
 	}
-
 }
