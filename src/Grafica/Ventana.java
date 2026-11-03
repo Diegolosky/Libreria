@@ -169,6 +169,7 @@ public class Ventana extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		if (e.getSource() == btnGuardar) {
 			String tipo = (String) comboBoxTipo.getSelectedItem();
 			String titulo = textFieldTitulo.getText();
@@ -181,25 +182,31 @@ public class Ventana extends JFrame implements ActionListener {
 			} else {
 				try {
 					int fecha = Integer.parseInt(fechaTexto);
-					Libro nuevo = new Libro(tipo, titulo, autor, fecha, valoracion);
-					miBiblioteca.agregarLibro(nuevo);
-					cargarTabla();
-					limpiarCampos();
-					System.out.println("Libro guardado con éxito.");
+
+					if (fecha > 2026) {
+						System.out.println("El año no puede ser mayor al año actual (2026).");
+					} else {
+						Libro nuevo = new Libro(tipo, titulo, autor, fecha, valoracion);
+						miBiblioteca.agregarLibro(nuevo);
+						cargarTabla();
+						limpiarCampos();
+						System.out.println("Datos guardados correctamente.");
+					}
 				} catch (NumberFormatException ex) {
-					System.out.println("La fecha debe ser un número entero.");
+					System.out.println("La fecha (año) debe ser un número válido.");
 				}
 			}
 		}
 
 		if (e.getSource() == btnBorrar) {
 			int filaSeleccionada = tabla.getSelectedRow();
+
 			if (filaSeleccionada != -1) {
 				miBiblioteca.eliminarLibro(filaSeleccionada);
 				cargarTabla();
-				System.out.println("Libro borrado con éxito.");
+				System.out.println("Libro eliminado correctamente.");
 			} else {
-				System.out.println("Debe seleccionar un libro de la tabla para borrar.");
+				System.out.println("Debe hacer clic en una fila de la tabla para seleccionar el libro a borrar.");
 			}
 		}
 	}
