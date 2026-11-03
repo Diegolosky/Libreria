@@ -1,10 +1,10 @@
 package Grafica;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.ImageIcon;
 import Logica.Biblioteca;
 import Logica.Libro;
 
@@ -40,6 +40,8 @@ public class Ventana extends JFrame implements ActionListener {
 		miBiblioteca = new Biblioteca();
 
 		setTitle("Libreria");
+		setIconImage(new ImageIcon(getClass().getResource("/Book.png")).getImage());
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 450);
 		mantel = new JPanel();
@@ -52,6 +54,7 @@ public class Ventana extends JFrame implements ActionListener {
 		crearComboBox();
 		crearBotones();
 		crearTabla();
+
 		cargarTabla();
 	}
 
