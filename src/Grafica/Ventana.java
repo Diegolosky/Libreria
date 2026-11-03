@@ -138,9 +138,9 @@ public class Ventana extends JFrame implements ActionListener {
 
 		tabla = new JTable(modelo);
 
-		JScrollPane scrollPane = new JScrollPane(tabla);
-		scrollPane.setBounds(260, 30, 580, 320);
-		mantel.add(scrollPane);
+		JScrollPane scrollPanel = new JScrollPane(tabla);
+		scrollPanel.setBounds(260, 30, 580, 320);
+		mantel.add(scrollPanel);
 	}
 
 	private void cargarTabla() {
