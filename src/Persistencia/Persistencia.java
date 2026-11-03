@@ -1,6 +1,5 @@
 package Persistencia;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -15,36 +14,24 @@ public class Persistencia {
 		try {
 			FileOutputStream flujoSalidaArchivo = new FileOutputStream(ruta);
 			ObjectOutputStream flujoSalidaObjeto = new ObjectOutputStream(flujoSalidaArchivo);
-
 			flujoSalidaObjeto.writeObject(lista);
-
 			flujoSalidaObjeto.close();
 			flujoSalidaArchivo.close();
 		} catch (Exception e) {
-			System.out.println("Error al guardar los datos: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
 	public static ArrayList<Libro> cargarDatos() {
 		String ruta = System.getProperty("user.dir") + "\\archivo.bin";
-		File archivo = new File(ruta);
-
-		if (!archivo.exists()) {
-			return new ArrayList<Libro>();
-		}
-
 		try {
 			FileInputStream flujoEntradaArchivo = new FileInputStream(ruta);
 			ObjectInputStream flujoEntradaObjeto = new ObjectInputStream(flujoEntradaArchivo);
-
-			ArrayList<Libro> listaCargada = (ArrayList<Libro>) flujoEntradaObjeto.readObject();
-
+			ArrayList<Libro> lista = (ArrayList<Libro>) flujoEntradaObjeto.readObject();
 			flujoEntradaObjeto.close();
 			flujoEntradaArchivo.close();
-
-			return listaCargada;
+			return lista;
 		} catch (Exception e) {
-			System.out.println("Error al cargar los datos: " + e.getMessage());
 			return new ArrayList<Libro>();
 		}
 	}
