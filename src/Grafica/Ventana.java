@@ -54,7 +54,6 @@ public class Ventana extends JFrame implements ActionListener {
 		crearComboBox();
 		crearBotones();
 		crearTabla();
-
 		cargarTabla();
 	}
 
