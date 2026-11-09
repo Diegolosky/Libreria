@@ -37,10 +37,15 @@ public class Ventana extends JFrame implements ActionListener {
 	private Biblioteca miBiblioteca;
 
 	public Ventana() {
+
 		miBiblioteca = new Biblioteca();
 
 		setTitle("Libreria");
-		setIconImage(new ImageIcon(getClass().getResource("/Book.png")).getImage());
+
+		java.net.URL imgUrl = getClass().getResource("/Book.png");
+		if (imgUrl != null) {
+			setIconImage(new ImageIcon(imgUrl).getImage());
+		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 450);
@@ -54,6 +59,7 @@ public class Ventana extends JFrame implements ActionListener {
 		crearComboBox();
 		crearBotones();
 		crearTabla();
+
 		cargarTabla();
 	}
 
